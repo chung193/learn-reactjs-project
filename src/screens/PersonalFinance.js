@@ -158,6 +158,10 @@ function PersonalFinance() {
     setSum(list.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0))
   }
 
+  const clearFilter = ()=>{
+    setIsFillter(false);
+  }
+
   function formatDateTime(input) {
   
     const year = input.getFullYear();
@@ -203,7 +207,7 @@ function PersonalFinance() {
     </Select>
 
       <Input type='text' placeholder="Name" value={inputName} onChange={(e)=>handleChange(e, 'name')}></Input>
-      <Input type='text' placeholder="Amount" value={inputAmount} onChange={(e)=>handleChange(e, 'amount')}></Input>
+      <Input type='number' placeholder="Amount" value={inputAmount} onChange={(e)=>handleChange(e, 'amount')}></Input>
       <Textarea minRows={2} placeholder="Note" value={inputNote} onChange={(e)=>handleChange(e, 'note')}/>
       <Button type='submit' onClick={handleSubmit}>Add data</Button>
       <Button type='button' onClick={
@@ -213,6 +217,7 @@ function PersonalFinance() {
           setSum(fakeData.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0))
         }
         }>Set fake data</Button>
+        <Button type='button' onClick={clearFilter}>Clear filter</Button>
       </Stack>
     </form>
 
@@ -228,20 +233,20 @@ function PersonalFinance() {
         (listFilter.map((item, index)=> 
           <ListItem key={item.id}>
           {
-            item.name +'-'+item.amount +'-'+item.catalog + '-' + formatDateTime(item.created_at)
+            item.name +'-'+item.amount.toLocaleString() +'-'+item.catalog + '-' + formatDateTime(item.created_at)
           }
           <Button onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>))
         :
         (list.map((item, index)=> 
         <ListItem key={item.id}>
         {
-          item.name +'-'+item.amount +'-'+item.catalog + '-' + formatDateTime(item.created_at)
+          item.name +'-'+item.amount.toLocaleString() +'-'+item.catalog + '-' + formatDateTime(item.created_at)
         }
         <Button onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>))
       } 
       </Stack>
       </List>
-      <p>Total : {sum}</p>
+      <p>Total : {sum.toLocaleString()}</p>
       </Stack>
   );
 }

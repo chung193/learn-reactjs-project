@@ -11,9 +11,6 @@ const Layout = () => {
           <li>
             <Link to="/personal-finance">Personal Finance</Link>
           </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
         </ul>
       </nav>
 
