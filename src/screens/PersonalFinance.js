@@ -8,8 +8,78 @@ import Textarea from '@mui/joy/Textarea';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
 
+const fakeData = [
+  {
+    id: 1,
+    name: 'trong tháng 1',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-01-25")
+  },
+  {
+    id: 2,
+    name: 'trong tháng 2',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-02-25")
+  },
+  {
+    id: 3,
+    name: 'trong tháng 3',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-03-25")
+  },
+  {
+    id: 4,
+    name: 'trong tháng 4',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-04-25")
+  },
+  {
+    id: 6,
+    name: 'trong tháng 5',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-05-25")
+  },
+  {
+    id: 7,
+    name: 'trong tháng 6',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-06-25")
+  },
+  {
+    id: 8,
+    name: 'trong tháng 6',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-06-25")
+  },
+  {
+    id: 9,
+    name: 'trong tháng 6',
+    amount: 1000000,
+    catalog: 'coffee',
+    note:'test',
+    created_at:  new Date("2022-06-25")
+  },
+]
+
 function PersonalFinance() {
   const [list, setList] = useState([]); 
+  const [sum, setSum] = useState(0); 
+  const [listFilter, setListFilter] = useState([]);
+  const [isFillter, setIsFillter] = useState(false); 
   const [catalogs, setCatalogs] = useState([
     'coffee', 'learn', 'dating', 'other', 'internet', 'electricity', 'water'
   ]); 
@@ -19,6 +89,10 @@ function PersonalFinance() {
   const [inputAmount, setInputAmount] = useState(''); 
   const [inputNote, setInputNote] = useState(''); 
 
+  useEffect(()=>{
+    console.log(fakeData.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0));
+  }, [])
+
   const handleDelete = (id)=>{
     let newArr = [...list];
     let result = newArr.find(element => element.id = id);
@@ -26,6 +100,7 @@ function PersonalFinance() {
       result.status = !result.status;
     }
     setList(newArr);
+    setSum(newArr.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0))
   }
 
   const handleChange = (e, name) =>{
@@ -44,8 +119,20 @@ function PersonalFinance() {
     }
   }
 
+  const handleFilter = (e, newValue)=>{
+    
+    setIsFillter(true);
+    let newArr = [...list];
+    
+    let result = newArr.filter((item)=>{
+      return (item.created_at.getMonth() + 1 == newValue);
+    })
+    setListFilter(result); 
+    setSum(result.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0));
+  }
+
   const handleSelectChange = (
-    event,
+    e,
     newValue
   ) => {
     setInputCatalog(newValue);
@@ -68,6 +155,7 @@ function PersonalFinance() {
     setInputAmount('');
     setInputNote('');
     setInputCatalog('');
+    setSum(list.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0))
   }
 
   function formatDateTime(input) {
@@ -104,10 +192,27 @@ function PersonalFinance() {
         catalogs.map((item)=>  <Option key={item} value={item}>{item}</Option>)
       }
       </Select> 
+
+      <Select defaultValue="6" placeholder="Filter by month" onChange={handleFilter} >
+      <Option value="1">1</Option>
+      <Option value="2">2</Option>
+      <Option value="3">3</Option>
+      <Option value="4">4</Option>
+      <Option value="5">5</Option>
+      <Option value="6">6</Option>
+    </Select>
+
       <Input type='text' placeholder="Name" value={inputName} onChange={(e)=>handleChange(e, 'name')}></Input>
       <Input type='text' placeholder="Amount" value={inputAmount} onChange={(e)=>handleChange(e, 'amount')}></Input>
       <Textarea minRows={2} placeholder="Note" value={inputNote} onChange={(e)=>handleChange(e, 'note')}/>
       <Button type='submit' onClick={handleSubmit}>Add data</Button>
+      <Button type='button' onClick={
+        ()=> {
+          setList(fakeData);
+          console.log(fakeData.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0));
+          setSum(fakeData.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0))
+        }
+        }>Set fake data</Button>
       </Stack>
     </form>
 
@@ -119,15 +224,24 @@ function PersonalFinance() {
     alignItems="flex-start"
     >
       {
-        list.map((item, index)=> 
+        isFillter ? 
+        (listFilter.map((item, index)=> 
+          <ListItem key={item.id}>
+          {
+            item.name +'-'+item.amount +'-'+item.catalog + '-' + formatDateTime(item.created_at)
+          }
+          <Button onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>))
+        :
+        (list.map((item, index)=> 
         <ListItem key={item.id}>
         {
           item.name +'-'+item.amount +'-'+item.catalog + '-' + formatDateTime(item.created_at)
         }
-        <Button onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>)
+        <Button onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>))
       } 
       </Stack>
       </List>
+      <p>Total : {sum}</p>
       </Stack>
   );
 }
