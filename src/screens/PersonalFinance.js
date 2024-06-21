@@ -160,6 +160,7 @@ function PersonalFinance() {
 
   const clearFilter = ()=>{
     setIsFillter(false);
+    setSum(list.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0));
   }
 
   function formatDateTime(input) {

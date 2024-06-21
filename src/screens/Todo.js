@@ -11,11 +11,14 @@ function Todo() {
 
   const handleDelete = (id)=>{
     let newArr = [...list];
-    let result = newArr.find(element => element.id = id);
+    debugger;
+    let result = newArr.find(element => element.id == id);
+    debugger;
     if (result !== 'undefined'){
       result.status = !result.status;
     }
     setList(newArr);
+    debugger;
   }
 
   const handleChange = (e) =>{
@@ -34,6 +37,7 @@ function Todo() {
 
       setList([...list, item]);
       setInput('');
+      debugger;
     }
   }
   
