@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './TicTacToe.css';
 
 function Square({ value, onSquareClick }) {
   return (

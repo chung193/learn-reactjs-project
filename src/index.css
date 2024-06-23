@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid gray
+}
+
+.sidebar {
+  padding: 20px 0;
+}
+
+.sidebar ul {
+  list-style-type: none;
+}
+
+.sidebar ul li {
+  margin: 5px 0
+}
+
+.sidebar ul a {
+  padding: 5px;
+  text-decoration: none;
+}
+
+.sidebar ul a:hover {
+  background-color: gray;
+  color: white
+}
+
+.main {
+  padding: 20px
+}

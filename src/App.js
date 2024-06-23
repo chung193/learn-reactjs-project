@@ -4,6 +4,8 @@ import Layout from './Layout';
 import Todo from './screens/Todo';
 import PersonalFinance from './screens/PersonalFinance';
 import TicTacToe from './screens/TicTacToe';
+import Calculator from './screens/Calculator';
+import ChatApp from './screens/ChatApp';
 import '@fontsource/inter';
 
 
@@ -13,9 +15,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path='tic-tac-toe' element={<TicTacToe />} />
           <Route index element={<Todo />} />
           <Route path='personal-finance' element={<PersonalFinance />} />
-          <Route path='tic-tac-toe' element={<TicTacToe />} />
+          <Route path='calculator' element={<Calculator />} />
+          <Route path='chat-app' element={<ChatApp />} />
         </Route>
       </Routes>
     </BrowserRouter>
