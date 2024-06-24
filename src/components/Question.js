@@ -2,34 +2,27 @@ import Radio from '@mui/joy/Radio';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import RadioGroup from '@mui/joy/RadioGroup';
-import { useState, useEffect  } from "react";
-import Button from '@mui/joy/Button';
 
 
 const Question = (props)=>{
-    const [id, setId] = useState(props.question.id);
-    const [answer, setAnswer] = useState('');
-    const handleChange = (e)=>{
-        setAnswer(e.target.value);
-    }
-    useEffect(() => {
-      }, []);
-
+    console.log(props.question.isTrue != 'undefined');
     return (
         <FormControl>
-        <FormLabel>{props.question.question}</FormLabel>
+        <FormLabel>{props.list}. {props.question.question}</FormLabel>
         <RadioGroup defaultValue="outlined" name="radio-buttons-group">
                 {
-                    props.question.options.map((item, index)=>{
-                        return (<Radio value={item} key={index} label={item} variant="outlined"  onChange={handleChange} />)
-                    })
+                    props.question.options.map((item, index)=>
+                        <Radio value={item} key={index} label={item}
+                    color={
+                        (props.question.hasOwnProperty('isTrue')) ? 
+                        (props.question.isTrue ? ((props.question.answer == item) ? 'success' : 'neutral') : ((props.question.userAnswer == item) ?   'danger' : (props.question.answer == item) ? 'success' : 'neutral'))
+                        : 'neutral'
+                    } 
+                    variant="outlined"  onChange={()=>{
+                            props.callback(props.question.id, item)}}/>
+                    )
                 }
         </RadioGroup>
-        <Button size="sm" onClick={()=>
-        {
-            props.callback(id, answer)
-        }
-        }>Submit</Button>
         </FormControl>
     )
 }
