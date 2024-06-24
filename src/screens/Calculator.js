@@ -5,7 +5,7 @@ import { Textfit } from "react-textfit";
 import './Calculator.css';
 
 const Wrapper = ({ children }) => {
-    return <div className="wrapper">{children}</div>;
+    return <div className="calculator"><div className="wrapper">{children}</div></div>;
   };
 
   const Screen = ({ value }) => {

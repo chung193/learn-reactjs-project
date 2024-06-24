@@ -7,6 +7,7 @@ import Stack from '@mui/joy/Stack';
 import Textarea from '@mui/joy/Textarea';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+import './PersonalFinance.css';
 
 const fakeData = [
   {

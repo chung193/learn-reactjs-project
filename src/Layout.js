@@ -23,6 +23,9 @@ const Layout = () => {
               <li>
                 <Link to="/chat-app">Chat app</Link>
               </li>
+              <li>
+                <Link to="/quiz">Quiz</Link>
+              </li>
             </ul>
           </nav>
       </div>

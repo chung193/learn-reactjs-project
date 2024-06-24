@@ -1,4 +1,4 @@
-.square {
+.tictactoe .square {
     background: #fff;
     border: 1px solid #999;
     float: left;
@@ -13,21 +13,21 @@
     width: 34px;
 }
 
-.board-row:after {
+.tictactoe .board-row:after {
     clear: both;
     content: '';
     display: table;
 }
 
-.status {
+.tictactoe .status {
     margin-bottom: 10px;
 }
 
-.game {
+.tictactoe .game {
     display: flex;
     flex-direction: row;
 }
 
-.game-info {
+.tictactoe .game-info {
     margin-left: 20px;
 }
