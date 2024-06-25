@@ -26,6 +26,9 @@ const Layout = () => {
               <li>
                 <Link to="/quiz">Quiz</Link>
               </li>
+              <li>
+                <Link to="/weather">Weather</Link>
+              </li>
             </ul>
           </nav>
       </div>
