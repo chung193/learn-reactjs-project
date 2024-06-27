@@ -8,6 +8,7 @@ import Calculator from './screens/Calculator';
 import ChatApp from './screens/ChatApp';
 import Quiz from './screens/Quiz';
 import Weather from './screens/Weather';
+import MusicPlayer from './screens/MusicPlayer';
 
 import '@fontsource/inter';
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='chat-app' element={<ChatApp />} />
           <Route path='quiz' element={<Quiz />} />
           <Route path='weather' element={<Weather />} />
+          <Route path='music-player' element={<MusicPlayer />} />
         </Route>
       </Routes>
     </BrowserRouter>

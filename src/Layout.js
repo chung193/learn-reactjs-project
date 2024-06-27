@@ -29,6 +29,9 @@ const Layout = () => {
               <li>
                 <Link to="/weather">Weather</Link>
               </li>
+              <li>
+                <Link to="/music-player">Music player</Link>
+              </li>
             </ul>
           </nav>
       </div>

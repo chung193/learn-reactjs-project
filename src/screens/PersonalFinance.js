@@ -179,11 +179,33 @@ function PersonalFinance() {
   return (
     <Stack 
     spacing={2}
+    direction="row"
+    justifyContent="flex-start"
+    alignItems="flex-start"
+    >
+
+    <form>
+    <Stack 
+    spacing={2}
+    direction="row"
+    justifyContent="flex-start"
+    alignItems="flex-start"
+    >
+    <fieldset>
+    <legend>Wallet</legend>
+    <Stack 
+    spacing={2}
     direction="column"
     justifyContent="flex-start"
     alignItems="flex-start"
     >
-    <form>
+    <Input type='text' placeholder="Tên ví" value={inputName} onChange={(e)=>handleChange(e, 'name')}></Input>
+    <Input type='number' placeholder="Số dư ban đầu" value={inputName} onChange={(e)=>handleChange(e, 'name')}></Input>
+    <Button type='submit' onClick={handleSubmit}>Thêm ví</Button>
+    </Stack>
+    </fieldset>
+    <fieldset>
+    <legend>Transaction</legend>
     <Stack 
     spacing={2}
     direction="column"
@@ -212,7 +234,12 @@ function PersonalFinance() {
       <Input type='number' placeholder="Amount" value={inputAmount} onChange={(e)=>handleChange(e, 'amount')}></Input>
       <Textarea minRows={2} placeholder="Note" value={inputNote} onChange={(e)=>handleChange(e, 'note')}/>
       <Button type='submit' onClick={handleSubmit}>Add data</Button>
-      <Button type='button' onClick={
+      
+      </Stack>
+    </fieldset>
+    </Stack>
+    </form>
+    <Button type='button' onClick={
         ()=> {
           setList(fakeData);
           console.log(fakeData.reduce((accumulator,b)=>{return  accumulator +  parseInt(b.amount) },0));
@@ -220,9 +247,6 @@ function PersonalFinance() {
         }
         }>Set fake data</Button>
         <Button type='button' onClick={clearFilter}>Clear filter</Button>
-      </Stack>
-    </form>
-
     <List marker='disc'>
     <Stack
     spacing={2}
