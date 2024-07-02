@@ -7,9 +7,14 @@ import Stack from '@mui/joy/Stack';
 import Textarea from '@mui/joy/Textarea';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+
 import './PersonalFinance.css';
 import fakeDataTrans from '../mockup/Transaction';
 import fakeDataWallet from '../mockup/Wallet';
+import TransType from '../mockup/TransType';
+import Catalog from '../mockup/Catalog';
+import AddTransaction from '../components/AddTransaction';
+import AddWallet from '../components/AddWallet';
 
 function PersonalFinance() {
   const [list, setList] = useState([]);
@@ -17,9 +22,7 @@ function PersonalFinance() {
   const [listFilter, setListFilter] = useState([]);
   const [isFillter, setIsFillter] = useState(false);
   const [wallets, setWallets] = useState([]);
-  const [catalogs, setCatalogs] = useState([
-    'coffee', 'learn', 'dating', 'other', 'internet', 'electricity', 'water'
-  ]);
+  const [catalogs, setCatalogs] = useState(Catalog);
 
   // input for wallet
   const [inputWalletName, setInputWalletName] = useState('');
@@ -73,10 +76,8 @@ function PersonalFinance() {
 
 
   const handleFilter = (e, newValue) => {
-
     setIsFillter(true);
     let newArr = [...list];
-
     let result = newArr.filter((item) => {
       return (item.created_at.getMonth() + 1 == newValue);
     })
@@ -132,7 +133,6 @@ function PersonalFinance() {
   }
 
   function formatDateTime(input) {
-
     const year = input.getFullYear();
     const month = String(input.getMonth() + 1).padStart(2, '0');
     const date = String(input.getDate()).padStart(2, '0');
@@ -156,70 +156,9 @@ function PersonalFinance() {
       justifyContent="flex-start"
       alignItems="flex-start"
     >
-
-      <form>
-        <Stack
-          spacing={2}
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-        >
-          <fieldset>
-            <legend>Wallet</legend>
-            <Stack
-              spacing={2}
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-            >
-              <Input type='text' placeholder="Tên ví" value={inputWalletName} onChange={(e) => handleChange(e, 'walletName')}></Input>
-              <Input type='number' placeholder="Số dư ban đầu" value={inputStartAmount} onChange={(e) => handleChange(e, 'startAmount')}></Input>
-              <Button type='submit' onClick={addWallet}>Thêm ví</Button>
-              
-            </Stack>
-          </fieldset>
-         
-          <fieldset>
-            <legend>Transaction</legend>
-            <Stack
-              spacing={2}
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-            >
-              <Select
-                value={inputCatalog}
-                onChange={handleSelectChange}
-                placeholder="Catalog">
-                {
-                  catalogs.map((item) => <Option key={item} value={item}>{item}</Option>)
-                }
-              </Select>
-                {
-                  wallets.length === 0 ?
-                  <p>Dont have any wallet, create one</p>
-                  :
-                  <Select
-                    value={inputWalletId}
-                    onChange={handleSelectChange}
-                    placeholder="Wallet">
-                    {
-                      wallets.map((item) => <Option key={item.id} value={item.id}>{item.name}</Option>)
-                    }
-                  </Select>
-                }
-              
-
-              <Input type='text' placeholder="Name" value={inputName} onChange={(e) => handleChange(e, 'name')}></Input>
-              <Input type='number' placeholder="Amount" value={inputAmount} onChange={(e) => handleChange(e, 'amount')}></Input>
-              <Textarea minRows={2} placeholder="Note" value={inputNote} onChange={(e) => handleChange(e, 'note')} />
-              <Button type='submit' onClick={handleSubmit}>Add data</Button>
-
-            </Stack>
-          </fieldset>
-        </Stack>
-      </form>
-      </Stack>
+       <AddWallet/>
+       <AddTransaction/>
+    </Stack>
               <ul>
                 {
                   wallets.map(item=> <li key={item.id}>{item.name} - {item.startAmount}</li>)
