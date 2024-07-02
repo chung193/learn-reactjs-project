@@ -12,6 +12,19 @@ code {
     monospace;
 }
 
+a{
+  text-decoration: none;
+  color: #555e68
+}
+
+a:hover{
+  font-weight: bold;
+}
+
+a.active {
+  font-weight: bold;
+}
+
 .container {
   display: flex;
   flex-direction: row;

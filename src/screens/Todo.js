@@ -4,6 +4,7 @@ import Input from '@mui/joy/Input';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import Stack from '@mui/joy/Stack';
+import ListDivider from '@mui/joy/ListDivider';
 
 function Todo() {
   const [list, setList] = useState([]); 
@@ -43,24 +44,25 @@ function Todo() {
   
   return (
     <Stack spacing={2}>
-    <form>
       <Input type='text' value={input} onChange={handleChange}></Input>
-      <Button type='submit' onClick={handleSubmit}>Add todo</Button>
-    </form>
-    <List marker='disc'>
-      {
-        list.map((item, index)=> 
-        <ListItem key={item.id}>
+      <Button type='submit' sx={{width: 200}} onClick={handleSubmit}>Add todo</Button>
+      <List marker='disc' sx={{width:'100%'}}>
         {
-          (!item.status) ? 
-          (<del>{item.name} </del>)
-          :
-          (item.name)
-        }
-        <Button onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>)
-      } 
+          list.map((item, index)=> 
+          <><ListItem key={item.id} sx={{width:'100%'}}>
+          {
+            (!item.status) ? 
+            (<del>{item.name} </del>)
+            :
+            (item.name)
+          }
+          <Button sx={{marginLeft: 10}} variant="plain" onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>
+          <ListDivider inset="startDecorator" /></>
+          )
+        } 
       </List>
-      </Stack>
+      
+    </Stack>
   );
 }
 
