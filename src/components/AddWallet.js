@@ -2,23 +2,21 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Stack from '@mui/joy/Stack';
 
-const AddWallet = () =>{
-    return (
-        <fieldset>
-            <legend>Wallet</legend>
-            <Stack
-              spacing={2}
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-            >
-              <Input type='text' placeholder="Tên ví" value={inputWalletName} onChange={(e) => handleChange(e, 'walletName')}></Input>
-              <Input type='number' placeholder="Số dư ban đầu" value={inputStartAmount} onChange={(e) => handleChange(e, 'startAmount')}></Input>
-              <Button type='submit' onClick={addWallet}>Thêm ví</Button>
-              
-            </Stack>
-          </fieldset>
-    )
+const AddWallet = (props) => {
+  return (
+    <Stack
+      spacing={2}
+      direction="column"
+      justifyContent="flex-start"
+      alignItems="flex-start"
+    >
+      <h2><strong>Add Wallet</strong></h2>
+      <Input type='text' placeholder="Tên ví" value={props.wallet.name} onChange={(e) => props.change(e, 'walletName')}></Input>
+      <Input type='number' placeholder="Số dư ban đầu" value={props.wallet.startAmount} onChange={(e) => props.change(e, 'startAmount')}></Input>
+      <Button type='submit' onClick={props.submit}>Add Wallet</Button>
+
+    </Stack>
+  )
 }
 
 export default AddWallet;

@@ -7,6 +7,13 @@ import Stack from '@mui/joy/Stack';
 import Textarea from '@mui/joy/Textarea';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+import Tabs from '@mui/joy/Tabs';
+import TabList from '@mui/joy/TabList';
+import Tab from '@mui/joy/Tab';
+import TabPanel from '@mui/joy/TabPanel';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import WalletIcon from '@mui/icons-material/Wallet';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 
 import './PersonalFinance.css';
 import fakeDataTrans from '../mockup/Transaction';
@@ -16,13 +23,14 @@ import Catalog from '../mockup/Catalog';
 import AddTransaction from '../components/AddTransaction';
 import AddWallet from '../components/AddWallet';
 
+import { formatDateTime, getName } from '../ultils/Common';
+
 function PersonalFinance() {
   const [list, setList] = useState([]);
   const [sum, setSum] = useState(0);
   const [listFilter, setListFilter] = useState([]);
   const [isFillter, setIsFillter] = useState(false);
   const [wallets, setWallets] = useState([]);
-  const [catalogs, setCatalogs] = useState(Catalog);
 
   // input for wallet
   const [inputWalletName, setInputWalletName] = useState('');
@@ -30,13 +38,14 @@ function PersonalFinance() {
   // input for trans
   const [inputCatalog, setInputCatalog] = useState('');
   const [inputName, setInputName] = useState('');
+  const [inputTransType, setInputTransType] = useState('');
+
   const [inputAmount, setInputAmount] = useState('');
   const [inputNote, setInputNote] = useState('');
   const [inputWalletId, setInputWalletId] = useState('');
 
   useEffect(() => {
-    // console.log(fakeDataWallet);
-    // console.log(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
+
   }, [])
 
   const handleDelete = (id) => {
@@ -59,6 +68,9 @@ function PersonalFinance() {
         break;
       case 'wallet_id':
         setInputWalletId(e.target.value);
+        break;
+      case 'trans_type':
+        setInputTransType(e.target.value);
         break;
       case 'note':
         setInputNote(e.target.value);
@@ -92,7 +104,14 @@ function PersonalFinance() {
     setInputCatalog(newValue);
   };
 
-  const addWallet = (e) =>{
+  const handleSelectChangeType = (
+    e,
+    newValue
+  ) => {
+    setInputTransType(newValue);
+  };
+
+  const addWallet = (e) => {
     e.preventDefault();
     let max = Math.max(...wallets.map(o => o.id)) + 1;
     const formData = {
@@ -106,12 +125,14 @@ function PersonalFinance() {
   }
 
   const handleSubmit = (e) => {
+    debugger;
     e.preventDefault();
     let max = Math.max(...list.map(o => o.id)) + 1;
     let now = new Date();
     const formData = {
       id: max,
-      inputWalletId: max,
+      wallet_id: inputWalletId,
+      type: inputTransType,
       catalog: inputCatalog,
       name: inputName,
       amount: inputAmount,
@@ -132,16 +153,7 @@ function PersonalFinance() {
     setSum(list.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
   }
 
-  function formatDateTime(input) {
-    const year = input.getFullYear();
-    const month = String(input.getMonth() + 1).padStart(2, '0');
-    const date = String(input.getDate()).padStart(2, '0');
-    const hours = String(input.getHours()).padStart(2, '0');
-    const minutes = String(input.getMinutes()).padStart(2, '0');
-    const seconds = String(input.getSeconds()).padStart(2, '0');
 
-    return `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`;
-  }
 
   return (
     <Stack
@@ -150,74 +162,119 @@ function PersonalFinance() {
       justifyContent="flex-start"
       alignItems="flex-start"
     >
-    <Stack
-      spacing={2}
-      direction="row"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-    >
-       <AddWallet/>
-       <AddTransaction/>
-    </Stack>
-              <ul>
-                {
-                  wallets.map(item=> <li key={item.id}>{item.name} - {item.startAmount}</li>)
-                }
-              </ul>
-      <Stack
-      spacing={2}
-      direction="row"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-    >
-      <Button type='button' onClick={
-        () => {
-          setWallets(fakeDataWallet);
-          setList(fakeDataTrans);
-          console.log(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
-          setSum(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0))
-        }
-      }>Set fake data</Button>
+      <h1><strong>Personal Finance</strong></h1>
+      <Tabs sx={{ width: '100%' }}>
+        <TabList>
+          <Tab
+            variant="plain"
+            color="neutral">
+            <EqualizerIcon />
+            Overview
+          </Tab>
+          <Tab
+            variant="plain"
+            color="neutral">
+            <WalletIcon />
+            Wallet
+          </Tab>
+          <Tab
+            variant="plain"
+            color="neutral">
+            <ReceiptIcon />
+            Transaction
+          </Tab>
+        </TabList>
+        <TabPanel value={0}>
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            <Button type='button' onClick={
+              () => {
+                setWallets(fakeDataWallet);
+                setList(fakeDataTrans);
+                console.log(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
+                setSum(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0))
+              }
+            }>Set fake data</Button>
 
-      <Button type='button' onClick={clearFilter}>Clear filter</Button>
+            <Button type='button' onClick={clearFilter}>Clear filter</Button>
 
-      <Select defaultValue="6" placeholder="Filter by month" onChange={handleFilter} >
-        <Option value="1">1</Option>
-        <Option value="2">2</Option>
-        <Option value="3">3</Option>
-        <Option value="4">4</Option>
-        <Option value="5">5</Option>
-        <Option value="6">6</Option>
-      </Select>
-      </Stack>
-      <List marker='disc'>
-        <Stack
-          spacing={2}
-          direction="column"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-        >
-          {
-            isFillter ?
-              (listFilter.map((item, index) =>
-                <ListItem key={item.id}>
-                  {
-                    item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
-                  }
-                  <Button onClick={() => handleDelete(item.id)}>Xoá</Button></ListItem>))
-              :
-              (list.map((item, index) =>
-                <ListItem key={item.id}>
-                  {
-                    item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
-                  }
-                  <Button onClick={() => handleDelete(item.id)}>Xoá</Button></ListItem>))
-          }
-        </Stack>
-      </List>
+            <Select defaultValue="6" placeholder="Filter by month" onChange={handleFilter} >
+              <Option value="1">1</Option>
+              <Option value="2">2</Option>
+              <Option value="3">3</Option>
+              <Option value="4">4</Option>
+              <Option value="5">5</Option>
+              <Option value="6">6</Option>
+            </Select>
+          </Stack>
+          <List marker='disc'>
+            <Stack
+              spacing={2}
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              {
+                isFillter ?
+                  (listFilter.map((item, index) =>
+                    <ListItem key={'trans-' + item.id}>
+                      {
+                        getName(TransType, item.type) + '-' + item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
+                      }
+                      <Button onClick={() => handleDelete(item.id)} variant="plain">Xoá</Button></ListItem>))
+                  :
+                  (list.map((item, index) =>
+                    <ListItem key={'trans-' + item.id}>
+                      {
+                        getName(TransType, item.type) + '-' + item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
+                      }
+                      <Button onClick={() => handleDelete(item.id)} variant="plain">Xoá</Button></ListItem>))
+              }
+            </Stack>
+          </List>
 
-      <p>Total : {sum.toLocaleString()}</p>
-    
+          <p>Total : {sum.toLocaleString()}</p>
+        </TabPanel>
+        <TabPanel value={1}>
+          <Stack direction='row' spacing={2}>
+            <AddWallet change={handleChange} submit={addWallet}
+              wallet={{
+                name: inputWalletName,
+                startAmount: inputStartAmount
+              }}
+            />
+            <ul>
+              {
+                wallets.map(item => <li key={item.id}><strong>{item.name}</strong> - {item.startAmount.toLocaleString()}</li>)
+              }
+            </ul>
+          </Stack>
+
+        </TabPanel>
+        <TabPanel value={2}>
+          <AddTransaction
+            change={handleChange}
+            submit={handleSubmit}
+            selectChange={handleSelectChange}
+            selectChangeType={handleSelectChangeType}
+            wallet={wallets}
+            listData={list}
+            transList={TransType}
+            trans={{
+              name: inputName,
+              catalog: inputCatalog,
+              type: inputTransType,
+              amount: inputAmount,
+              note: inputNote,
+              wallet_id: inputWalletId
+            }}
+          />
+        </TabPanel>
+      </Tabs>
     </Stack>
   );
 }

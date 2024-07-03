@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
 import List from '@mui/joy/List';
@@ -12,14 +12,11 @@ function Todo() {
 
   const handleDelete = (id)=>{
     let newArr = [...list];
-    debugger;
     let result = newArr.find(element => element.id == id);
-    debugger;
     if (result !== 'undefined'){
       result.status = !result.status;
     }
     setList(newArr);
-    debugger;
   }
 
   const handleChange = (e) =>{
