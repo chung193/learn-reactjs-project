@@ -80,32 +80,32 @@ const Sidebar = () => {
                 {open && (
                     <List sx={{ '--ListItem-paddingY': '8px' }}>
                         <ListItem>
-                            <ListItemButton><NavLink activeClassName="active" to="/tic-tac-toe">Tic Tac Toe</NavLink></ListItemButton>
+                            <ListItemButton><NavLink activeclassname="active" to="/tic-tac-toe">Tic Tac Toe</NavLink></ListItemButton>
                         </ListItem>
                         <ListItem>
                             <ListItemButton>
-                                <NavLink activeClassName="active" to="/">Todo</NavLink>
+                                <NavLink activeclassname="active" to="/">Todo</NavLink>
                             </ListItemButton>
                         </ListItem>
                         <ListItem>
                             <ListItemButton>
-                                <NavLink activeClassName="active" to="/personal-finance">Personal Finance</NavLink>
+                                <NavLink activeclassname="active" to="/personal-finance">Personal Finance</NavLink>
                             </ListItemButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemButton><NavLink activeClassName="active" to="/calculator">Calculator</NavLink></ListItemButton>
+                            <ListItemButton><NavLink activeclassname="active" to="/calculator">Calculator</NavLink></ListItemButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemButton><NavLink activeClassName="active" to="/chat-app">Chat app</NavLink></ListItemButton>
+                            <ListItemButton><NavLink activeclassname="active" to="/chat-app">Chat app</NavLink></ListItemButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemButton><NavLink activeClassName="active" to="/quiz">Quiz</NavLink></ListItemButton>
+                            <ListItemButton><NavLink activeclassname="active" to="/quiz">Quiz</NavLink></ListItemButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemButton><NavLink activeClassName="active" to="/weather">Weather</NavLink></ListItemButton>
+                            <ListItemButton><NavLink activeclassname="active" to="/weather">Weather</NavLink></ListItemButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemButton><NavLink activeClassName="active" to="/music-player">Music player</NavLink></ListItemButton>
+                            <ListItemButton><NavLink activeclassname="active" to="/music-player">Music player</NavLink></ListItemButton>
                         </ListItem>
                     </List>
                 )}
