@@ -23,15 +23,18 @@ import Catalog from '../mockup/Catalog';
 import AddTransaction from '../components/AddTransaction';
 import AddWallet from '../components/AddWallet';
 
-import { formatDateTime, getName } from '../ultils/Common';
+import { formatDateTime, getName, getOperator } from '../ultils/Common';
 
 function PersonalFinance() {
+
   const [list, setList] = useState([]);
   const [sum, setSum] = useState(0);
   const [listFilter, setListFilter] = useState([]);
   const [isFillter, setIsFillter] = useState(false);
   const [wallets, setWallets] = useState([]);
-
+  const [catalogs, setCatalogs] = useState([]);
+  const [isDisableCatalogSelect, setIsDisableCatalogSelect] = useState(true);
+  const [isShowFrom, setIsShowFrom] = useState(false);
   // input for wallet
   const [inputWalletName, setInputWalletName] = useState('');
   const [inputStartAmount, setInputStartAmount] = useState(0);
@@ -39,7 +42,7 @@ function PersonalFinance() {
   const [inputCatalog, setInputCatalog] = useState('');
   const [inputName, setInputName] = useState('');
   const [inputTransType, setInputTransType] = useState('');
-
+  const [inputFrom, setInputFrom] = useState('');
   const [inputAmount, setInputAmount] = useState('');
   const [inputNote, setInputNote] = useState('');
   const [inputWalletId, setInputWalletId] = useState('');
@@ -62,6 +65,9 @@ function PersonalFinance() {
     switch (name) {
       case 'name':
         setInputName(e.target.value);
+        break;
+      case 'from':
+        setInputFrom(e.target.value);
         break;
       case 'amount':
         setInputAmount(e.target.value);
@@ -101,7 +107,13 @@ function PersonalFinance() {
     e,
     newValue
   ) => {
-    setInputCatalog(newValue);
+    if (newValue != null) {
+      setInputCatalog(newValue);
+      debugger;
+      let result = Catalog.find(item => item.id == newValue);
+      if (result.name == 'loan' || result.name == 'borrow')
+        setIsShowFrom(true);
+    }
   };
 
   const handleSelectChangeType = (
@@ -109,6 +121,8 @@ function PersonalFinance() {
     newValue
   ) => {
     setInputTransType(newValue);
+    setCatalogs(Catalog.filter(item => item.type_id == newValue));
+    setIsDisableCatalogSelect(false);
   };
 
   const addWallet = (e) => {
@@ -125,13 +139,13 @@ function PersonalFinance() {
   }
 
   const handleSubmit = (e) => {
-    debugger;
     e.preventDefault();
     let max = Math.max(...list.map(o => o.id)) + 1;
     let now = new Date();
     const formData = {
       id: max,
       wallet_id: inputWalletId,
+      from: inputFrom,
       type: inputTransType,
       catalog: inputCatalog,
       name: inputName,
@@ -145,7 +159,7 @@ function PersonalFinance() {
     setInputWalletId('');
     setInputNote('');
     setInputCatalog('');
-    setSum(list.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0))
+    setSum(list.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
   }
 
   const clearFilter = () => {
@@ -162,6 +176,7 @@ function PersonalFinance() {
       justifyContent="flex-start"
       alignItems="flex-start"
     >
+
       <h1><strong>Personal Finance</strong></h1>
       <Tabs sx={{ width: '100%' }}>
         <TabList>
@@ -263,6 +278,7 @@ function PersonalFinance() {
             selectChangeType={handleSelectChangeType}
             wallet={wallets}
             listData={list}
+            listCatalog={catalogs}
             transList={TransType}
             trans={{
               name: inputName,
@@ -270,8 +286,11 @@ function PersonalFinance() {
               type: inputTransType,
               amount: inputAmount,
               note: inputNote,
-              wallet_id: inputWalletId
+              wallet_id: inputWalletId,
+              from: inputFrom
             }}
+            isSelectCatalog={isDisableCatalogSelect}
+            isShowFrom={isShowFrom}
           />
         </TabPanel>
       </Tabs>

@@ -1,21 +1,23 @@
 const TransType = [
     {
         id: 1,
-        name: 'Thu',
-        from: '',
+        name: 'Khoản thu',
         operator: 'summation',
     },
     {
-        id: 1,
-        name: 'Chi',
-        from: '',
+        id: 2,
+        name: 'Khoản chi',
         operator: 'subtraction',
     },
     {
-        id: 1,
+        id: 3,
         name: 'Đi vay',
-        from: '',
         operator: 'summation',
+    },
+    {
+        id: 4,
+        name: 'cho vay',
+        operator: 'subtraction',
     },
 ];
 export default TransType;

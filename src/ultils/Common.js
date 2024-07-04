@@ -11,6 +11,17 @@ export function formatDateTime(input) {
 
 export function getName(arr, id) {
     let result = arr.find((item) => item.id == id);
-    debugger;
-    return result.name;
+    if (result === undefined)
+        return;
+    else
+        return result.name;
 }
+
+export function getOperator(arr, id) {
+    let result = arr.find((item) => item.id == id);
+    if (result === undefined)
+        return;
+    else
+        return result.operator;
+}
+

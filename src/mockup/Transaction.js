@@ -7,6 +7,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-01-25")
   },
   {
@@ -17,6 +18,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-02-25")
   },
   {
@@ -27,6 +29,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-03-25")
   },
   {
@@ -37,6 +40,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-04-25")
   },
   {
@@ -47,6 +51,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-05-25")
   },
   {
@@ -57,6 +62,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-06-25")
   },
   {
@@ -67,6 +73,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-06-25")
   },
   {
@@ -77,6 +84,7 @@ const fakeDataTrans = [
     amount: 1000000,
     catalog: 'coffee',
     note: 'test',
+    from: '',
     created_at: new Date("2022-06-25")
   },
 ]

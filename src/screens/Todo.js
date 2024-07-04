@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
 import List from '@mui/joy/List';
@@ -7,25 +7,25 @@ import Stack from '@mui/joy/Stack';
 import ListDivider from '@mui/joy/ListDivider';
 
 function Todo() {
-  const [list, setList] = useState([]); 
-  const [input, setInput] = useState(''); 
+  const [list, setList] = useState([]);
+  const [input, setInput] = useState('');
 
-  const handleDelete = (id)=>{
+  const handleDelete = (id) => {
     let newArr = [...list];
     let result = newArr.find(element => element.id == id);
-    if (result !== 'undefined'){
+    if (result !== 'undefined') {
       result.status = !result.status;
     }
     setList(newArr);
   }
 
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     setInput(e.target.value);
   }
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if(input !== ''){
+    if (input !== '') {
       let max = Math.max(...list.map(o => o.id)) + 1;
       let item = {
         id: max !== -Infinity ? max : 1,
@@ -35,30 +35,29 @@ function Todo() {
 
       setList([...list, item]);
       setInput('');
-      debugger;
     }
   }
-  
+
   return (
     <Stack spacing={2}>
       <Input type='text' value={input} onChange={handleChange}></Input>
-      <Button type='submit' sx={{width: 200}} onClick={handleSubmit}>Add todo</Button>
-      <List marker='disc' sx={{width:'100%'}}>
+      <Button type='submit' sx={{ width: 200 }} onClick={handleSubmit}>Add todo</Button>
+      <List marker='disc' sx={{ width: '100%' }}>
         {
-          list.map((item, index)=> 
-          <><ListItem key={item.id} sx={{width:'100%'}}>
-          {
-            (!item.status) ? 
-            (<del>{item.name} </del>)
-            :
-            (item.name)
-          }
-          <Button sx={{marginLeft: 10}} variant="plain" onClick={()=> handleDelete(item.id)}>Xoá</Button></ListItem>
-          <ListDivider inset="startDecorator" /></>
+          list.map((item, index) =>
+            <><ListItem key={item.id} sx={{ width: '100%' }}>
+              {
+                (!item.status) ?
+                  (<del>{item.name} </del>)
+                  :
+                  (item.name)
+              }
+              <Button sx={{ marginLeft: 10 }} variant="plain" onClick={() => handleDelete(item.id)}>Xoá</Button></ListItem>
+              <ListDivider inset="startDecorator" /></>
           )
-        } 
+        }
       </List>
-      
+
     </Stack>
   );
 }
