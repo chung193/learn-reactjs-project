@@ -19,9 +19,31 @@ export function getName(arr, id) {
 
 export function getOperator(arr, id) {
     let result = arr.find((item) => item.id == id);
+    debugger;
     if (result === undefined)
         return;
     else
         return result.operator;
 }
 
+export function getMoneyInWallet(arrTrans, arrWallet, arrType, id) {
+    let newArr = arrTrans.filter((item) => item.wallet_id == id);
+    let wallet = arrWallet.find(item => item.id == id);
+    let sum = wallet.startAmount;
+    if (newArr.length > 0) {
+
+        newArr.forEach(element => {
+            let type = arrType.find(item => item.id == element.type);
+            switch (type.operator) {
+                case 'subtraction':
+                    sum -= element.amount;
+                    break;
+                case 'summation':
+                    sum += element.amount;
+                    break;
+                default:
+            }
+        });
+    }
+    return sum.toLocaleString();
+}

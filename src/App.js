@@ -10,6 +10,7 @@ import Quiz from './screens/Quiz';
 import Weather from './screens/Weather';
 import MusicPlayer from './screens/MusicPlayer';
 import { CssVarsProvider, extendTheme } from '@mui/joy/styles';
+import Sheet from '@mui/joy/Sheet';
 
 import '@fontsource/inter';
 
@@ -23,20 +24,22 @@ function App() {
       disableNestedContext
       modeStorageKey="demo-system-mode"
     >
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path='tic-tac-toe' element={<TicTacToe />} />
-            <Route index element={<Todo />} />
-            <Route path='personal-finance' element={<PersonalFinance />} />
-            <Route path='calculator' element={<Calculator />} />
-            <Route path='chat-app' element={<ChatApp />} />
-            <Route path='quiz' element={<Quiz />} />
-            <Route path='weather' element={<Weather />} />
-            <Route path='music-player' element={<MusicPlayer />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Sheet sx={{ minHeight: '100dvh' }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path='tic-tac-toe' element={<TicTacToe />} />
+              <Route index element={<Todo />} />
+              <Route path='personal-finance' element={<PersonalFinance />} />
+              <Route path='calculator' element={<Calculator />} />
+              <Route path='chat-app' element={<ChatApp />} />
+              <Route path='quiz' element={<Quiz />} />
+              <Route path='weather' element={<Weather />} />
+              <Route path='music-player' element={<MusicPlayer />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Sheet>
     </CssVarsProvider>
   );
 }

@@ -23,7 +23,7 @@ import Catalog from '../mockup/Catalog';
 import AddTransaction from '../components/AddTransaction';
 import AddWallet from '../components/AddWallet';
 
-import { formatDateTime, getName, getOperator } from '../ultils/Common';
+import { formatDateTime, getName, getOperator, getMoneyInWallet } from '../ultils/Common';
 
 function PersonalFinance() {
 
@@ -72,12 +72,13 @@ function PersonalFinance() {
       case 'amount':
         setInputAmount(e.target.value);
         break;
-      case 'wallet_id':
-        setInputWalletId(e.target.value);
-        break;
-      case 'trans_type':
-        setInputTransType(e.target.value);
-        break;
+      // case 'wallet_id':
+      //   setInputWalletId(e.target.value);
+      //   debugger;
+      //   break;
+      // case 'trans_type':
+      //   setInputTransType(e.target.value);
+      //   break;
       case 'note':
         setInputNote(e.target.value);
         break;
@@ -93,15 +94,7 @@ function PersonalFinance() {
   }
 
 
-  const handleFilter = (e, newValue) => {
-    setIsFillter(true);
-    let newArr = [...list];
-    let result = newArr.filter((item) => {
-      return (item.created_at.getMonth() + 1 == newValue);
-    })
-    setListFilter(result);
-    setSum(result.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
-  }
+
 
   const handleSelectChange = (
     e,
@@ -123,6 +116,13 @@ function PersonalFinance() {
     setInputTransType(newValue);
     setCatalogs(Catalog.filter(item => item.type_id == newValue));
     setIsDisableCatalogSelect(false);
+  };
+
+  const handleSelectChangeWallet = (
+    e,
+    newValue
+  ) => {
+    setInputWalletId(newValue);
   };
 
   const addWallet = (e) => {
@@ -161,13 +161,6 @@ function PersonalFinance() {
     setInputCatalog('');
     setSum(list.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
   }
-
-  const clearFilter = () => {
-    setIsFillter(false);
-    setSum(list.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
-  }
-
-
 
   return (
     <Stack
@@ -215,44 +208,35 @@ function PersonalFinance() {
               }
             }>Set fake data</Button>
 
-            <Button type='button' onClick={clearFilter}>Clear filter</Button>
 
-            <Select defaultValue="6" placeholder="Filter by month" onChange={handleFilter} >
-              <Option value="1">1</Option>
-              <Option value="2">2</Option>
-              <Option value="3">3</Option>
-              <Option value="4">4</Option>
-              <Option value="5">5</Option>
-              <Option value="6">6</Option>
-            </Select>
+            <List marker='disc'>
+              <Stack
+                spacing={2}
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+              >
+                {
+                  isFillter ?
+                    (listFilter.map((item, index) =>
+                      <ListItem key={'trans-' + item.id}>
+                        {
+                          getName(TransType, item.type) + '-' + item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
+                        }
+                        <Button onClick={() => handleDelete(item.id)} variant="plain">Xoá</Button></ListItem>))
+                    :
+                    (list.map((item, index) =>
+                      <ListItem key={'trans-' + item.id}>
+                        {
+                          getName(TransType, item.type) + '-' + item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
+                        }
+                        <Button onClick={() => handleDelete(item.id)} variant="plain">Xoá</Button></ListItem>))
+                }
+              </Stack>
+            </List>
+
+            <p>Total : {sum.toLocaleString()}</p>
           </Stack>
-          <List marker='disc'>
-            <Stack
-              spacing={2}
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-            >
-              {
-                isFillter ?
-                  (listFilter.map((item, index) =>
-                    <ListItem key={'trans-' + item.id}>
-                      {
-                        getName(TransType, item.type) + '-' + item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
-                      }
-                      <Button onClick={() => handleDelete(item.id)} variant="plain">Xoá</Button></ListItem>))
-                  :
-                  (list.map((item, index) =>
-                    <ListItem key={'trans-' + item.id}>
-                      {
-                        getName(TransType, item.type) + '-' + item.name + '-' + item.amount.toLocaleString() + '-' + item.catalog + '-' + formatDateTime(item.created_at)
-                      }
-                      <Button onClick={() => handleDelete(item.id)} variant="plain">Xoá</Button></ListItem>))
-              }
-            </Stack>
-          </List>
-
-          <p>Total : {sum.toLocaleString()}</p>
         </TabPanel>
         <TabPanel value={1}>
           <Stack direction='row' spacing={2}>
@@ -264,7 +248,7 @@ function PersonalFinance() {
             />
             <ul>
               {
-                wallets.map(item => <li key={item.id}><strong>{item.name}</strong> - {item.startAmount.toLocaleString()}</li>)
+                wallets.map(item => <li key={item.id}><strong>{item.name}</strong> - {getMoneyInWallet(list, wallets, TransType, item.id)}</li>)
               }
             </ul>
           </Stack>
@@ -276,6 +260,7 @@ function PersonalFinance() {
             submit={handleSubmit}
             selectChange={handleSelectChange}
             selectChangeType={handleSelectChangeType}
+            selectChangeWallet={handleSelectChangeWallet}
             wallet={wallets}
             listData={list}
             listCatalog={catalogs}

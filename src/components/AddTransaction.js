@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react'
 
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
@@ -17,6 +17,29 @@ import TransItem from './TransItem';
 
 const AddTransaction = (props) => {
 
+  const [listFilter, setListFilter] = useState([]);
+  const [isFillter, setIsFillter] = useState(false);
+  const [sum, setSum] = useState(0);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    setList(props.listData);
+  }, []);
+
+  const handleFilter = (e, newValue) => {
+    setIsFillter(true);
+    let newArr = [...list];
+    let result = newArr.filter((item) => {
+      return (item.created_at.getMonth() + 1 == newValue);
+    })
+    setListFilter(result);
+    setSum(result.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
+  }
+
+  const clearFilter = () => {
+    setIsFillter(false);
+    setSum(list.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
+  }
 
   return (
     <Stack
@@ -51,7 +74,7 @@ const AddTransaction = (props) => {
             :
             <Select
               value={props.trans.wallet_id}
-              onChange={props.handleSelectChange}
+              onChange={props.selectChangeWallet}
               placeholder="Wallet">
               {
                 props.wallet.map((item) => <Option key={'wallet-select-list-' + item.id + item.name} value={item.id}>{item.name}</Option>)
@@ -75,6 +98,29 @@ const AddTransaction = (props) => {
         direction="column"
         sx={{ width: '100%' }}
       >
+        <Stack
+          spacing={2}
+          direction="row"
+          sx={{ width: '100%', p: 2 }}
+        >
+          <Button type='button' onClick={clearFilter}>Clear filter</Button>
+
+          <Select placeholder="Filter by month" onChange={handleFilter} >
+            <Option value="1">1</Option>
+            <Option value="2">2</Option>
+            <Option value="3">3</Option>
+            <Option value="4">4</Option>
+            <Option value="5">5</Option>
+            <Option value="6">6</Option>
+            <Option value="7">7</Option>
+            <Option value="8">8</Option>
+            <Option value="9">9</Option>
+            <Option value="10">10</Option>
+            <Option value="11">11</Option>
+            <Option value="12">12</Option>
+          </Select>
+        </Stack>
+
         <List>
           {
             (props.listData.map((item, index) =>

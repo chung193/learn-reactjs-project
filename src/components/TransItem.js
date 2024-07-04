@@ -6,6 +6,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Stack from '@mui/joy/Stack';
 
 const TransItem = (props) => {
+    console.log(props);
     return (
         <Box component="section" sx={{ p: 2, border: '1px dashed grey', width: '100%' }}>
             <Box sx={{ marginBottom: 1 }}>
@@ -29,7 +30,7 @@ const TransItem = (props) => {
                             <Stack direction='row' justifyContent="flex-start" alignItems='center' sx={{ width: '100%' }}>
                                 <h3 style={{ margin: 0 }}>
                                     {
-                                        (props.operator == 'subtraction' ? '-' : '+') + props.data.amount
+                                        (props.data.operator == 'subtraction' ? '-' : '+') + props.data.amount.toLocaleString()
                                     }</h3>
                             </Stack>
                         </Box>
