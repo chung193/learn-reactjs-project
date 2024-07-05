@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Sheet from '@mui/joy/Sheet';
 import ToggleColorMode from '../components/ToggleColorMode';
-
+import ToggleLanguage from '../components/ToggleLanguage';
 const Header = (props) => {
 
     return (
@@ -17,6 +17,7 @@ const Header = (props) => {
             }}
         >
             <ToggleColorMode />
+            <ToggleLanguage />
         </Sheet>
     );
 }

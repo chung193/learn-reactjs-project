@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 export default function Footer() {
     const [color, setColor] = React.useState('neutral');
     const { t, i18n } = useTranslation();
+    console.log(t);
     return (
         <Sheet
             variant="solid"

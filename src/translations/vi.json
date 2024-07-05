@@ -1,5 +1,6 @@
 {
-    "language": "vietnamese",
-    "welcome": "xin chào ",
-    "component": {}
+    "translation": {
+        "language": "vietnamese",
+        "welcome": "xin chào "
+    }
 }
