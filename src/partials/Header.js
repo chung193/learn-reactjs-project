@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Sheet from '@mui/joy/Sheet';
-import ToggleColorMode from './components/ToggleColorMode';
+import ToggleColorMode from '../components/ToggleColorMode';
 
 const Header = (props) => {
 

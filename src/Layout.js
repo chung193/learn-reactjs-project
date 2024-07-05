@@ -10,9 +10,9 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import * as React from 'react';
 import Divider from '@mui/joy/Divider';
 import Box from '@mui/joy/Box';
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import Footer from "./Footer";
+import Header from "./partials/Header";
+import Sidebar from "./partials/Sidebar";
+import Footer from "./partials/Footer";
 const Layout = () => {
 
   return (
