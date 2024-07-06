@@ -6,7 +6,6 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Stack from '@mui/joy/Stack';
 
 const TransItem = (props) => {
-    console.log(props);
     return (
         <Box component="section" sx={{ p: 2, border: '1px dashed grey', width: '100%' }}>
             <Box sx={{ marginBottom: 1 }}>

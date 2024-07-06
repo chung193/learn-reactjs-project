@@ -203,7 +203,6 @@ function PersonalFinance() {
               () => {
                 setWallets(fakeDataWallet);
                 setList(fakeDataTrans);
-                console.log(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0));
                 setSum(fakeDataTrans.reduce((accumulator, b) => { return accumulator + parseInt(b.amount) }, 0))
               }
             }>Set fake data</Button>

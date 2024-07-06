@@ -105,7 +105,7 @@ const Sidebar = () => {
                                 <ListItemButton><Link component={RouterLink} to="/weather">Weather</Link></ListItemButton>
                             </ListItem>
                             <ListItem>
-                                <ListItemButton><Link component={RouterLink} to="/music-player">Music player</Link></ListItemButton>
+                                <ListItemButton><Link component={RouterLink} to="/blog">Blog</Link></ListItemButton>
                             </ListItem>
                         </List>
                     )}

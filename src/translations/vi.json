@@ -1,6 +1,10 @@
 {
     "translation": {
         "language": "vietnamese",
-        "welcome": "xin chào "
+        "welcome": "xin chào ",
+        "components": {},
+        "screens": {
+            "todo": {}
+        }
     }
 }

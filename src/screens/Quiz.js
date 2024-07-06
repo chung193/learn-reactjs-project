@@ -12,7 +12,6 @@ const Quiz = () => {
     const count = useRef(0);
     useEffect(() => {
         count.current = count.current + 1;
-        console.log(isEnd);
     }, []);
 
     const handleSelect = (id, answer) => {
