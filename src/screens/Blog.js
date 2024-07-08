@@ -18,7 +18,8 @@ const Blog = () => {
                 axios.get('https://chungvd.name.vn/api/catalogs').then(response => {
                     setCatalogs(response.data.data);
                     axios.get('https://chungvd.name.vn/api/category/posts/' + response.data.data[0].id).then(response => {
-                        setPosts(response.data.data[0].posts);
+                        let newArr = removeDup(response.data.data[0].posts);
+                        setPosts(newArr);
                     })
                 })
 
@@ -33,11 +34,15 @@ const Blog = () => {
         fetchData();
     }, []);
 
-
+    const removeDup = (arr) => {
+        const uniqueArray = [...new Map(arr.map(item => [item.id, item])).values()];
+        return uniqueArray;
+    }
     const handleTabChange = (e, newValue) => {
         setActiveTab(newValue);
         axios.get('https://chungvd.name.vn/api/category/posts/' + catalogs[newValue].id).then(response => {
-            setPosts(response.data.data);
+            let newArr = removeDup(response.data.data[0].posts);
+            setPosts(newArr);
         })
     }
 
