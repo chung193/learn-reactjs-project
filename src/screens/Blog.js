@@ -14,60 +14,37 @@ const Blog = () => {
     React.useEffect(() => {
 
         const fetchData = () => {
-            const url = 'https://chungvd.name.vn/api/catalogs';
             try {
-                axios.get(url).then(response => {
+                axios.get('https://chungvd.name.vn/api/catalogs').then(response => {
                     setCatalogs(response.data.data);
-                    fetchListPost(response.data.data).then(result => {
-                        if (result !== undefined) {
-                            debugger;
-                            setPosts(result.data.data);
-                            setLoading(false);
-                        }
-                    });
+                    axios.get('https://chungvd.name.vn/api/category/posts/' + response.data.data[0].id).then(response => {
+                        setPosts(response.data.data);
+                    })
                 })
+
             } catch (e) {
                 console.log(e);
                 setLoading(false);
             } finally {
                 setLoading(false);
             }
-
         };
 
         fetchData();
     }, []);
 
-    const fetchListPost = async (catalogs) => {
-        if (catalogs !== undefined) {
-            try {
-                let newArr = [];
-                catalogs.forEach(element => {
-                    const url = 'https://chungvd.name.vn/api/category/posts/' + element.id;
-                    let item = axios.get(url);
-                    newArr.push(item);
-                });
-                Promise.all(newArr)
-                    .then(list => {
-                        return list;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    }
 
     const handleTabChange = (e, newValue) => {
         setActiveTab(newValue);
+        axios.get('https://chungvd.name.vn/api/category/posts/' + catalogs[newValue].id).then(response => {
+            setPosts(response.data.data);
+        })
     }
 
     return (
         <>
             {
-                (loading) ?
+                loading ?
                     <Loading />
                     :
                     <Tabs
@@ -95,12 +72,11 @@ const Blog = () => {
                             }
                         </TabList>
                         {
-                            posts.map(
-                                (item, index) =>
-                                    <TabPanel value={index}>
-                                        <p key={item.id}>{item.name}</p>
-                                    </TabPanel>
-                            )
+
+                            catalogs.map((item, index) =>
+                                <TabPanel value={index} key={'catalog-' + item.id}>
+                                    {posts.map(element => <li key={element.id}>{element.name}</li>)}
+                                </TabPanel>)
                         }
 
 
