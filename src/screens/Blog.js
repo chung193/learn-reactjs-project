@@ -18,7 +18,7 @@ const Blog = () => {
                 axios.get('https://chungvd.name.vn/api/catalogs').then(response => {
                     setCatalogs(response.data.data);
                     axios.get('https://chungvd.name.vn/api/category/posts/' + response.data.data[0].id).then(response => {
-                        setPosts(response.data.data);
+                        setPosts(response.data.data[0].posts);
                     })
                 })
 
@@ -75,7 +75,7 @@ const Blog = () => {
 
                             catalogs.map((item, index) =>
                                 <TabPanel value={index} key={'catalog-' + item.id}>
-                                    {posts.map(element => <li key={element.id}>{element.name}</li>)}
+                                    {posts.map(element => <p key={element.id}>{element.name}</p>)}
                                 </TabPanel>)
                         }
 
