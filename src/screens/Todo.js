@@ -6,22 +6,6 @@ import ListItem from '@mui/joy/ListItem';
 import Stack from '@mui/joy/Stack';
 import ListDivider from '@mui/joy/ListDivider';
 
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "COMPLETE":
-      return state.map((todo) => {
-        if (todo.id === action.id) {
-          return { ...todo, complete: !todo.complete };
-        } else {
-          return todo;
-        }
-      });
-    default:
-      return state;
-  }
-};
-
 const initialTodos = [
   {
     id: 1,
@@ -36,51 +20,65 @@ const initialTodos = [
 ];
 
 function Todo() {
-  const [todos, dispatch] = useReducer(reducer, initialTodos);
+  const [todos, setTodos] = useState(initialTodos);
+  const [input, setInput] = useState('');
 
-  const handleComplete = (todo) => {
-    dispatch({ type: "COMPLETE", id: todo.id });
-  };
+  const handleDelete = (id) => {
+    let newArr = [...todos];
+    let result = newArr.find(element => element.id == id);
+    if (result !== 'undefined') {
+      result.complete = !result.complete;
+    }
+    setTodos(newArr);
+  }
 
-  // const handleDelete = (id) => {
-  //   let newArr = [...list];
-  //   let result = newArr.find(element => element.id == id);
-  //   if (result !== 'undefined') {
-  //     result.status = !result.status;
-  //   }
-  //   setList(newArr);
-  // }
+  const handleComplete = (id) => {
+    debugger;
+    let newArr = [...todos];
+    let result = newArr.find(element => element.id == id);
+    if (result !== 'undefined') {
+      result.complete = !result.complete;
+    }
+    setTodos(newArr);
+  }
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (input !== '') {
-  //     let max = Math.max(...todos.map(o => o.id)) + 1;
-  //     let item = {
-  //       id: max !== -Infinity ? max : 1,
-  //       name: input,
-  //       status: true
-  //     }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (input != '') {
+      let max = Math.max(...todos.map(o => o.id)) + 1;
+      let item = {
+        id: max !== -Infinity ? max : 1,
+        title: input,
+        complete: false
+      }
 
-  //     setTodos([...todos, item]);
-  //     setInput('');
-  //   }
-  // }
+      setTodos([...todos, item]);
+      setInput('');
+    }
+  }
 
   return (
     <Stack spacing={2}>
+      <Input placeholder="Type in here…" onChange={(e) => {
+        e.preventDefault();
+        setInput(e.target.value);
 
-
+      }} />
+      <Button sx={{ width: '20%' }} onClick={(e) => {
+        handleSubmit(e)
+      }}>Submit</Button>
       <List marker='disc' sx={{ width: '100%' }}>
         {
           todos.map((todo) =>
-            <><ListItem key={todo.id} sx={{ width: '100%' }}>
-              {todo.title}
-              <input
-                type="checkbox"
-                checked={todo.complete}
-                onChange={() => handleComplete(todo)}
-              />
-            </ListItem>
+            <>
+              <ListItem key={todo.id} sx={{ width: '100%' }}>
+                {todo.title}
+                <input
+                  type="checkbox"
+                  checked={todo.complete}
+                  onChange={() => handleComplete(todo.id)}
+                />
+              </ListItem>
               <ListDivider inset="startDecorator" /></>
           )
         }
